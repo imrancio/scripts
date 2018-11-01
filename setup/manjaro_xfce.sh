@@ -109,7 +109,8 @@ while true; do
 				echo "alias blackmate='sudo sh /usr/share/blackmate/blackmate.sh'" >> ~/.bashrc
 			fi
 
-			echo "Run 'blackmate' to update BlackArch menus"
+			sudo sh /usr/share/blackmate/blackmate.sh
+			echo -e "\033[32m[*]\e[0m Run 'blackmate' to update BlackArch menus"
 			break
 			;;
 		[Nn]* )
@@ -150,21 +151,26 @@ while true; do
 			# install custom plugins
 			git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 			git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-			# powerlevel9k theme
+			# install powerlevel9k theme
 			git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
-			# add to plugins() in .zshrc
-			sed -i.bak 's/^  git/  git\n  virtualenv\n  z\n  history\n  colorize\n  colored-man-pages\n  sublime\n  zsh-autosuggestions\n  zsh-syntax-highlighting/' ~/.zshrc
 			# set theme in .zshrc
-			sed -n 's/^\(ZSH_THEME="\).*/\1powerlevel9k\/powerlevel9k"/' ~/.zshrc
+			grep -qF "powerlevel9k" ~/.zshrc || 
+			sed -i.bak 's/^\(ZSH_THEME="\).*/\1powerlevel9k\/powerlevel9k"/' ~/.zshrc
+			# add to plugins() in .zshrc
+			grep -qF "zsh-autosuggestions" ~/.zshrc || 
+			sed -i 's/^  git/  git\n  virtualenv\n  z\n  history\n  colorize\n  colored-man-pages\n  sublime\n  zsh-autosuggestions\n  zsh-syntax-highlighting/' ~/.zshrc
+			# set default user
+			grep -qF "DEFAULT_USER" ~/.zshrc || echo "DEFAULT_USER=$USER" >> ~/.zshrc
 			
 			for c in $(./*.zsh); do
 				# copy custom files
-				cp $c ~/.oh-my-zsh/custom
+				cp -n $c ~/.oh-my-zsh/custom
 			done
 
-			echo "Run 'setalias' on zsh shell to set custom aliases"
-			echo "Run 'setfunc' on zsh shell to set custom functions"
+			echo -e "\033[32m[*]\e[0m Restart terminal or run 'zsh' to see new shell"
+			echo -e "\033[32m[*]\e[0m Run 'setalias' on zsh shell to set custom aliases"
+			echo -e "\033[32m[*]\e[0m Run 'setfunc' on zsh shell to set custom functions"
 
 			if [ -d "/usr/share/blackmate" ] && [ -f ~/.oh-my-zsh/custom/aliases.zsh ]; then
 				grep -qF "alias blackmate='sudo sh /usr/share/blackmate/blackmate.sh'" ~/.oh-my-zsh/custom/aliases.zsh || 
