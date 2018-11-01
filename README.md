@@ -5,7 +5,7 @@ This repo will hold any useful shell scripts to automate various setup and confi
 ```sh
 git clone https://github.com/imrancio/scripts.git
 cd scripts
-setup/<script name>
+bash setup/<script name>
 ```
 
 ### setup/manjaro_xfce.sh
