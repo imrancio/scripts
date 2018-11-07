@@ -9,6 +9,7 @@ while true; do
 			# Install Manjaro packages
 			sudo pacman -S --needed \
 			python2-requests \
+			python2-pip \
 			terminator \
 			gnu-netcat \
 			deluge \
