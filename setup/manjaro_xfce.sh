@@ -11,7 +11,6 @@ while true; do
 			python2-requests \
 			terminator \
 			gnu-netcat \
-			virtualbox \
 			deluge \
 			nodejs \
 			npm \
@@ -20,9 +19,7 @@ while true; do
 			clisp \
 			swi-prolog \
 			gdb \
-			valgrind \
-			neofetch
-
+			valgrind
 			# Terminator themes plugin
 			mkdir -p $HOME/.config/terminator/plugins
 			wget https://git.io/v5Zww -O $HOME"/.config/terminator/plugins/terminator-themes.py"
@@ -49,7 +46,8 @@ while true; do
 			dropbox \
 			thunar-dropbox-git \
 			tor-browser \
-			google-chrome
+			google-chrome \
+			otf-nerd-fonts-fira-code
 			break
 			;;
 	    [Nn]* )
@@ -147,35 +145,37 @@ while true; do
 			read -p $'\033[31m[WARNING]\e[0m '"Must run 'exit' after switching to oh-my-zsh shell [ok] "
 			# oh-my-zsh
 			sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-			
 			# install custom plugins
 			git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 			git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 			# install powerlevel9k theme
 			git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-
 			# set theme in .zshrc
 			grep -qF "powerlevel9k" ~/.zshrc || 
 			sed -i.bak 's/^\(ZSH_THEME="\).*/\1powerlevel9k\/powerlevel9k"/' ~/.zshrc
 			# add to plugins() in .zshrc
 			grep -qF "zsh-autosuggestions" ~/.zshrc || 
 			sed -i 's/^  git/  git\n  virtualenv\n  z\n  history\n  colorize\n  colored-man-pages\n  sublime\n  zsh-autosuggestions\n  zsh-syntax-highlighting/' ~/.zshrc
+			# set powerlevel9k mode
+			grep -qF "POWERLEVEL9K_MODE" ~/.zshrc || 
+			sed -i "/^ZSH_THEME/i POWERLEVEL9K_MODE='nerdfont-complete'" ~/.zshrc
 			# set default user
 			grep -qF "DEFAULT_USER" ~/.zshrc || echo "DEFAULT_USER=$USER" >> ~/.zshrc
-			
-			for c in $(./*.zsh); do
-				# copy custom files
-				cp -n $c ~/.oh-my-zsh/custom
-			done
-
-			echo -e "\033[32m[*]\e[0m Restart terminal or run 'zsh' to see new shell"
-			echo -e "\033[32m[*]\e[0m Run 'setalias' on zsh shell to set custom aliases"
-			echo -e "\033[32m[*]\e[0m Run 'setfunc' on zsh shell to set custom functions"
-
+			# copy custom files
+			cp -n *.zsh ~/.oh-my-zsh/custom
+			# Terminator config
+			if [ -d "~/.config/terminator" ]; then
+				cp config/terminator ~/.config/terminator/config
+			fi
+			# blackmate alias
 			if [ -d "/usr/share/blackmate" ] && [ -f ~/.oh-my-zsh/custom/aliases.zsh ]; then
 				grep -qF "alias blackmate='sudo sh /usr/share/blackmate/blackmate.sh'" ~/.oh-my-zsh/custom/aliases.zsh || 
 				echo "alias blackmate='sudo sh /usr/share/blackmate/blackmate.sh'" >> ~/.oh-my-zsh/custom/aliases.zsh
 			fi
+
+			echo -e "\033[32m[*]\e[0m Restart terminal or run 'zsh' to see new shell"
+			echo -e "\033[32m[*]\e[0m Run 'setalias' on zsh shell to set custom aliases"
+			echo -e "\033[32m[*]\e[0m Run 'setfunc' on zsh shell to set custom functions"
 			break
 			;;
 	    [Nn]* )
