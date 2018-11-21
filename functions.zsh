@@ -33,8 +33,11 @@ ipv6()
 # get public facing ip
 whereami()
 {
-	command -v dig >/dev/null 2>&1 || { curl https://ipinfo.io/ip; return }
-	# faster dig ip from bind-tools (if exists)
+	command -v dig >/dev/null 2>&1 || { 
+		curl https://ipinfo.io/ip; 
+		echo "Install 'bind-tools' or 'dnsutils' for faster results!"; 
+		return }
+	# faster dig ip from DNS (if exists)
 	dig +short myip.opendns.com @resolver1.opendns.com
 }
 
