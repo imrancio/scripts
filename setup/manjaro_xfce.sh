@@ -11,6 +11,7 @@ while true; do
 			python2-requests \
 			python2-pip \
 			terminator \
+			nerd-fonts-terminus \
 			gnu-netcat \
 			deluge \
 			nodejs \
@@ -47,9 +48,27 @@ while true; do
 			ttf-ms-fonts \
 			dropbox \
 			thunar-dropbox-git \
-			tor-browser \
-			google-chrome \
-			otf-nerd-fonts-fira-code
+			google-chrome
+			break
+			;;
+	    [Nn]* )
+			break
+			;;
+		* )
+			echo "Please answer yes or no"
+			;;
+	esac
+done
+
+# Git config
+while true; do
+	read -p $'\033[32m[2]\e[0m '"Configure Git? [y/N] " yn
+	case $yn in
+	    [Yy]* )
+			read -p $'\033[32m[*]\e[0m '"Email? " email
+			git config --global user.email $email
+			read -p $'\033[32m[*]\e[0m '"Name? " name
+			git config --global user.name $name
 			break
 			;;
 	    [Nn]* )
