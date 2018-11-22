@@ -92,8 +92,8 @@ while true; do
 			if [ $? -ne 0 ]; then
 				# get BlackArch script
 				wget https://blackarch.org/strap.sh
-				# check shasum (current as of 11/18)
-				diff <(sha1sum strap.sh) <(echo "73aae423a31410e021ef1b8f1becd573d2bd17dc  strap.sh")
+				# check shasum (current as of 22/11/18)
+				diff <(sha1sum strap.sh) <(echo "9f770789df3b7803105e5fbc19212889674cd503  strap.sh")
 				if [ $? -eq 0 ]; then
 					# install BlackArch repo
 					chmod +x strap.sh
