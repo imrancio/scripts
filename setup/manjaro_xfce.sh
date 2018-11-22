@@ -11,7 +11,6 @@ while true; do
 			python2-requests \
 			python2-pip \
 			terminator \
-			nerd-fonts-terminus \
 			gnu-netcat \
 			bind-tools \
 			deluge \
@@ -50,8 +49,8 @@ while true; do
 			sublime-text-3-imfix \
 			ttf-ms-fonts \
 			dropbox \
-			thunar-dropbox-git \
-			google-chrome
+			google-chrome \
+			nerd-fonts-terminus
 			break
 			;;
 	    [Nn]* )
