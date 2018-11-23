@@ -72,7 +72,7 @@ done
 
 # Git config
 while true; do
-	read -p $'\033[32m[2]\e[0m '"Configure Git? [y/N] " yn
+	read -p $'\033[32m[3]\e[0m '"Configure Git? [y/N] " yn
 	case $yn in
 	    [Yy]* )
 			read -p $'\033[32m[*]\e[0m '"Email? " email
@@ -92,7 +92,7 @@ done
 
 # Install pentesting tools from BlackArch
 while true; do
-	read -p $'\033[32m[3]\e[0m '"Install BlackArch repo and tools? [y/N] " yn
+	read -p $'\033[32m[4]\e[0m '"Install BlackArch repo and tools? [y/N] " yn
 	case $yn in
 		[Yy]* )
 			# check if repo not installed
@@ -152,7 +152,7 @@ done
 
 # Fix Windows/Linux dual-boot time issues
 while true; do
-	read -p $'\033[32m[4]\e[0m '"Fix Windows/Linux dual-boot time issue? [y/N] " yn
+	read -p $'\033[32m[5]\e[0m '"Fix Windows/Linux dual-boot time issue? [y/N] " yn
 	case $yn in
 	    [Yy]* )
 			timedatectl set-local-rtc 1 --adjust-system-clock
@@ -169,7 +169,7 @@ done
 
 # Set up oh-my-zsh with Powerlevel9k theme
 while true; do
-	read -p $'\033[32m[5]\e[0m '"Set up oh-my-zsh with Powerlevel9k theme? [y/N] " yn
+	read -p $'\033[32m[6]\e[0m '"Set up oh-my-zsh with Powerlevel9k theme? [y/N] " yn
 	case $yn in
 	    [Yy]* )
 			read -p $'\033[31m[WARNING]\e[0m '"Must run 'exit' after switching to oh-my-zsh shell [ok] "

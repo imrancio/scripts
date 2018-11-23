@@ -12,8 +12,22 @@ bash setup/<script name>
 Interactive shell script to set up and configure fresh Manjaro XFCE install. Broken down into optional stages:
 * Installs core packages from Manjaro repo
 * Installs additional packages from AUR (must be enabled in pamac)
+* Configures Git email & name
 * Sets up BlackArch repo/menus and installs some pentesting tools
 * Fixes incorrect datetime issue arising from Linux/Windows dual-boot
 * Sets up `oh-my-zsh` with `powerlevel9k` theme and custom plugins `zsh-autocomplete` & `zsh-autosuggestions`
 
 All this can be configured of course depending on the use case, but should apply to anyone wanting a similar setup.
+
+### setup/arch_pentest.sh
+Installs some pentesting tools from Arch repo and AUR. Packages include:
+* aircrack-ng
+* burpsuite
+* create_ap
+* hashcat
+* hydra
+* john
+* nmap
+* rkhunter
+* samdump2
+* sqlmap
