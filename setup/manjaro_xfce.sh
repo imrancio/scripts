@@ -8,26 +8,34 @@ while true; do
 			sudo pacman -Syu
 			# Install Manjaro packages
 			sudo pacman -S --needed \
-			python2-requests \
-			python2-pip \
-			terminator \
-			gnu-netcat \
+			adapta-maia-theme \
+			adapta-manjaro-themes \
 			bind-tools \
+			clisp \
+			conky-lua-nv \
+			conky-manager \
 			deluge \
-            seahorse \
+			gdb \
+			ghc \
+			gnu-netcat \
+			go \
+			grsync \
+			keepassxc \
+			neofetch \
 			nodejs \
 			npm \
-			go \
-			ghc \
-			clisp \
+			pdfgrep \
+			python-virtualenv \
+			python2-pip \
+			python2-requests \
+			s-nail \
+			seahorse \
 			swi-prolog \
-			gdb \
+			terminator \
+			ttf-roboto \
 			valgrind \
 			vim \
 			yay
-			# Terminator themes plugin
-			mkdir -p $HOME/.config/terminator/plugins
-			wget https://git.io/v5Zww -O $HOME"/.config/terminator/plugins/terminator-themes.py"
 			break
 			;;
 	    [Nn]* )
@@ -45,12 +53,12 @@ while true; do
 	case $yn in
 	    [Yy]* )
 			pamac build \
-			spotify \
-			sublime-text-3-imfix \
-			ttf-ms-fonts \
 			dropbox \
 			google-chrome \
-			nerd-fonts-terminus
+			nerd-fonts-terminus \
+			spotify \
+			sublime-text-3-imfix \
+			ttf-ms-fonts
 			break
 			;;
 	    [Nn]* )
@@ -118,10 +126,9 @@ while true; do
 			blackarch/rkhunter \
 			blackarch/hydra \
 			blackarch/burpsuite \
-			blackarch-menus \
 			blackarch-config-gtk
 
-			# Add/update blackarch menus using 'blackmate'
+			# Add/update blackarch menus using 'blackmate' command
 			if [ ! -d "/usr/share/blackmate" ]; then
 				git clone https://github.com/imrancio/blackmate.git
 				sudo mv blackmate /usr/share
@@ -179,7 +186,7 @@ while true; do
 			# add to plugins() in .zshrc
 			grep -qF "zsh-autosuggestions" ~/.zshrc ||
 			sed -i 's/^  git/  git\n  virtualenv\n  z\n  history\n  colorize\n  colored-man-pages\n  sublime\n  zsh-autosuggestions\n  zsh-syntax-highlighting/' ~/.zshrc
-			# set powerlevel9k mode
+			# set powerlevel9k mode (nerd-font)
 			grep -qF "POWERLEVEL9K_MODE" ~/.zshrc ||
 			sed -i "/^ZSH_THEME/i POWERLEVEL9K_MODE='nerdfont-complete'" ~/.zshrc
 			# set default user
@@ -188,11 +195,17 @@ while true; do
 			cp -n *.zsh ~/.oh-my-zsh/custom
 			# Terminator config
 			if [ -d "~/.config/terminator" ]; then
+				# Check font
+				pacman -Qe | grep -q nerd-fonts-terminus || pamac build nerd-fonts-terminus
+				# Terminator themes plugin
+				mkdir -p ~/.config/terminator/plugins
+				wget https://git.io/v5Zww -O $HOME"/.config/terminator/plugins/terminator-themes.py"
+				# Set default theme and font
 				cp config/terminator ~/.config/terminator/config
 			fi
 			# blackmate alias
 			if [ -d "/usr/share/blackmate" ] && [ -f ~/.oh-my-zsh/custom/aliases.zsh ]; then
-				grep -qF "alias blackmate='sudo sh /usr/share/blackmate/blackmate.sh'" ~/.oh-my-zsh/custom/aliases.zsh ||
+				grep -qF "alias blackmate=" ~/.oh-my-zsh/custom/aliases.zsh ||
 				echo "alias blackmate='sudo sh /usr/share/blackmate/blackmate.sh'" >> ~/.oh-my-zsh/custom/aliases.zsh
 			fi
 
