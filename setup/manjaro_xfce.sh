@@ -21,8 +21,9 @@ while true; do
 			go \
 			grsync \
 			keepassxc \
+			mongodb \
 			neofetch \
-			nodejs \
+			nodejs-lts-dubnium \
 			npm \
 			pdfgrep \
 			python-virtualenv \
@@ -53,6 +54,7 @@ while true; do
 	case $yn in
 	    [Yy]* )
 			pamac build \
+			atom-editor-bin \
 			dropbox \
 			google-chrome \
 			nerd-fonts-terminus \
