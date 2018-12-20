@@ -12,8 +12,10 @@ while true; do
 			adapta-manjaro-themes \
 			bind-tools \
 			clisp \
+			code \
 			conky-lua-nv \
 			conky-manager \
+			copyq \
 			deluge \
 			gdb \
 			ghc \
@@ -22,6 +24,7 @@ while true; do
 			grsync \
 			keepassxc \
 			mongodb \
+			muparser \
 			neofetch \
 			nodejs-lts-dubnium \
 			npm \
@@ -34,6 +37,7 @@ while true; do
 			swi-prolog \
 			terminator \
 			ttf-roboto \
+			units \
 			valgrind \
 			vim \
 			yay
@@ -54,8 +58,10 @@ while true; do
 	case $yn in
 	    [Yy]* )
 			pamac build \
+			albert \
 			atom-editor-bin \
 			dropbox \
+			font-manager \
 			google-chrome \
 			nerd-fonts-terminus \
 			spotify \
