@@ -5,17 +5,16 @@ while true; do
 	case $yn in
 	    [Yy]* )
 			# Upgrade system
-			sudo pacman -Syu
+			sudo pacman -Syu yay
 			# Install Manjaro packages
 			sudo pacman -S --needed \
-			adapta-maia-theme \
-			adapta-manjaro-themes \
+			atom \
+			apm \
 			bind-tools \
 			clisp \
 			code \
 			conky-lua-nv \
 			conky-manager \
-			copyq \
 			deluge \
 			gdb \
 			ghc \
@@ -25,7 +24,6 @@ while true; do
 			keepassxc \
 			mongodb \
 			muparser \
-			neofetch \
 			nodejs-lts-dubnium \
 			npm \
 			pdfgrep \
@@ -37,10 +35,7 @@ while true; do
 			swi-prolog \
 			terminator \
 			ttf-roboto \
-			units \
-			valgrind \
-			vim \
-			yay
+			vim
 			break
 			;;
 	    [Nn]* )
@@ -57,15 +52,13 @@ while true; do
 	read -p $'\033[32m[2]\e[0m '"Install AUR packages? Must be enabled in pamac! [y/N] " yn
 	case $yn in
 	    [Yy]* )
-			pamac build \
-			albert \
-			atom-editor-bin \
+			yay -S \
 			dropbox \
 			font-manager \
-			google-chrome \
+			google-chrome-dev \
 			nerd-fonts-terminus \
 			spotify \
-			sublime-text-3-imfix \
+			sublime-text-3-dev \
 			ttf-ms-fonts
 			break
 			;;
@@ -204,7 +197,7 @@ while true; do
 			# Terminator config
 			if [ -d "~/.config/terminator" ]; then
 				# Check font
-				pacman -Qe | grep -q nerd-fonts-terminus || pamac build nerd-fonts-terminus
+				pacman -Qe | grep -q nerd-fonts-terminus || yay -S nerd-fonts-terminus
 				# Terminator themes plugin
 				mkdir -p ~/.config/terminator/plugins
 				wget https://git.io/v5Zww -O $HOME"/.config/terminator/plugins/terminator-themes.py"
@@ -216,7 +209,6 @@ while true; do
 				grep -qF "alias blackmate=" ~/.oh-my-zsh/custom/aliases.zsh ||
 				echo "alias blackmate='sudo sh /usr/share/blackmate/blackmate.sh'" >> ~/.oh-my-zsh/custom/aliases.zsh
 			fi
-
 			# pacman config
 			sudo sed -i 's/^#Color/Color/' /etc/pacman.conf
 			sudo sed -i 's/^#TotalDownload/TotalDownload/' /etc/pacman.conf
