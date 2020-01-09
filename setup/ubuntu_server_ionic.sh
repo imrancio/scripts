@@ -6,7 +6,10 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 sudo apt update && apt-cache policy docker-ce
 sudo apt install docker-ce docker-compose unzip
 # nano syntax highlight
-curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
+git clone --single-branch --branch=v2.9 https://github.com/scopatz/nanorc.git ~/.nano
+cat ~/.nano/nanorc >> ~/.nanorc
+echo "include $install_path/*.nanorc" >> ~/.nanorc
+
 sudo systemctl status docker
 sudo usermod -aG docker $USER
 su - $USER
