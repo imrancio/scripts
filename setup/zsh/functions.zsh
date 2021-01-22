@@ -2,9 +2,56 @@
 # Custom functions #
 ####################
 
-# Networking
+# Conky
 
-# get public facing IP
+# kill Conky-Skeleton
+conkykill()
+{
+	kill $(pgrep -f conkyrc.lua)
+}
+
+# change Conky-Skeleton wifi interface
+conkywifi()
+{
+	if [ -n $1 ]; then
+		find ~/.conky/Conky-Skeleton -type f -name "skeleton*.lua" -exec sed -i'' -e "s/$(grep -oP 'upspeed ([a-z0-9]*)+' ~/.conky/Conky-Skeleton/conkyrc.lua | cut -d ' ' -f 2)/$1/g" {} +
+	else
+		echo "Usage: conkywifi <new interface>"
+	fi
+}
+
+# conkylan()
+# {
+# 	if [ -n $1 ]; then
+# 		find ~/.conky/Conky-Skeleton -type f -name "skeleton*.lua" -exec sed -i'' -e "s/$(grep -oP 'Wired LAN device: ${color0}([a-z0-9]*)+${color}' ~/.conky/Conky-Skeleton/conkyrc.lua | cut -d ' ' -f 2)/$1/g" {} +
+# 	else
+# 		echo "Usage: conkylan <new interface>"
+# 	fi
+# }
+
+conkys()
+{
+
+	conky -dc ~/.conky/Conky-Skeleton/conkyrc.lua
+}
+
+# start Conky-Skeleton
+conkystart()
+{
+	conky -c ~/.conky/Conky-Skeleton/conkyrc.lua &>/dev/null
+}
+
+# Networking
+abyss_vpn()
+{
+	if [ $# -eq 1 ]; then
+		sudo wg-quick $1 abyss
+	else
+		echo "usage: abyss_vpn <up/down>"
+	fi
+}
+
+# get public facing ip
 whereami()
 {
 	command -v dig >/dev/null 2>&1 || { 
@@ -15,7 +62,7 @@ whereami()
 	dig +short myip.opendns.com @resolver1.opendns.com
 }
 
-# private IPv4 address
+# private IPs
 ipv4()
 {
 	if [ $# -eq 1 ]; then
@@ -24,8 +71,6 @@ ipv4()
 		echo "Usage: ipv4 <net interface>"
 	fi
 }
-
-# private IPv6 address
 ipv6()
 {
 	if [ $# -eq 1 ]; then
@@ -35,7 +80,7 @@ ipv6()
 	fi
 }
 
-# show MAC address of net interface
+# show MAC addr of net interface
 mac()
 {
 	if [ $# -eq 1 ]; then
@@ -118,4 +163,51 @@ rmfast()
 	else
 		echo "Usage: rmfast dir/to/delete"
 	fi
+}
+
+# Fix tearing issue with nvidia
+tearing() 
+{
+	local f="$1"
+	if [ "$f" == "off"  ]; then
+        nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceFullCompositionPipeline = On }"
+    elif [ "$f" == "on" ]; then
+        nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceFullCompositionPipeline = Off }"
+    else
+        echo 'Usage: tearing <off>'
+    fi
+}
+
+# kill process in port
+portkill()
+{
+	if [ $# -eq 1 ]; then
+		fuser -k $1/tcp
+	fi
+}
+
+venv() {
+	if [ $# -eq 1 ]; then
+		source ~/venvs/$1/bin/activate
+	fi
+}
+
+update_zsh_plugins() {
+	for plugin in $ZSH_CUSTOM/plugins/*; do
+		if [ $(basename $plugin) != example ]; then
+		  cd $plugin && git pull
+		fi
+	done
+}
+
+dump() {
+	if [ $# -eq 1 ]; then
+		yes "$1"
+	else
+		echo "Usage: dump <string>"
+	fi
+}
+
+whatcanido() {
+	[[ $USER = "imran" ]] && echo "everything" || echo "nothing"
 }
