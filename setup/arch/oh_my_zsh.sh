@@ -27,6 +27,7 @@ while true; do
 			git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 			git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
 			git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+			git clone https://github.com/Aloxaf/fzf-tab ~ZSH_CUSTOM/plugins/fzf-tab
 			# add to plugins() in .zshrc
 			grep -qF "zsh-autosuggestions" ~/.zshrc ||
 			cat >> "~/.zshrc" <<-END
@@ -42,6 +43,7 @@ while true; do
 				  yarn
 				  pip
 				  vscode
+				  fzf-tab
 				  zsh-autosuggestions
 				  zsh-completions
 				  zsh-syntax-highlighting
