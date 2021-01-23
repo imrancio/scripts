@@ -6,9 +6,9 @@ while true; do
 	read -p $'\033[32m[1]\e[0m '"Set up oh-my-zsh with Powerlevel9k theme and custom plugins? [y/N] " yn
 	case $yn in
 		[Yy]* )
-			read -p $'\033[31m[WARNING]\e[0m '"Must run 'exit' after switching to oh-my-zsh shell [ok] "
+			read -p $'\033[33m[WARNING]\e[0m '"Must run 'exit' after switching to oh-my-zsh shell [ok] "
 			# zsh
-			sudo pacman -Sy --needed --noconfirm zsh
+			sudo pacman -Sy --needed --noconfirm zsh fzf
 			# oh-my-zsh
 			sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 			# copy custom zsh files
@@ -60,8 +60,14 @@ while true; do
 				cp "${BASEDIR}/../../dotfiles/config/terminator" ~/.config/terminator/config
 			fi
 			# fzf keybindings
-			[[ -f /usr/share/fzf/key-bindings.zsh ]] && cp /usr/share/fzf/key-bindings.zsh ~/.oh-my-zsh/custom/fzf-key-bindings.zsh
+			[[ -f /usr/share/fzf/key-bindings.zsh ]] && (
+				cp /usr/share/fzf/key-bindings.zsh ~/.oh-my-zsh/custom/fzf-key-bindings.zsh
+				echo -e "\033[32m[*]\e[0m Enter 'Ctrl + r' to reverse search commands using fzf"
+				echo -e "\033[32m[*]\e[0m Enter 'Ctrl + t' to  paste the selected file path(s) using fzf"
+				echo -e "\033[32m[*]\e[0m Enter 'Alt + c' to to cd into the selected file path using fzf"
+			)
 			echo -e "\033[32m[*]\e[0m Restart terminal or run 'zsh' to see new shell"
+			echo -e $'\033[33m[WARNING]\e[0m '"Terminal font must be nerd-font!"
 			echo -e "\033[32m[*]\e[0m Run 'setalias' on zsh shell to set custom aliases"
 			echo -e "\033[32m[*]\e[0m Run 'setfunc' on zsh shell to set custom functions"
 			echo -e "\033[32m[*]\e[0m Run 'zshrc' on zsh shell to edit zshrc"

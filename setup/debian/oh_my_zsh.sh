@@ -6,7 +6,7 @@ while true; do
 	read -p $'\033[32m[1]\e[0m '"Set up oh-my-zsh with Powerlevel9k theme and custom plugins? [y/N] " yn
 	case $yn in
 		[Yy]* )
-			read -p $'\033[31m[WARNING]\e[0m '"Must run 'exit' after switching to oh-my-zsh shell [ok] "
+			read -p $'\033[33m[WARNING]\e[0m '"Must run 'exit' after switching to oh-my-zsh shell [ok] "
 			# zsh
 			sudo apt update && sudo apt install -y zsh
 			# oh-my-zsh
