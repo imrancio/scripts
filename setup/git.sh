@@ -2,13 +2,13 @@
 
 # Git config
 while true; do
-	read -p $'\033[32m[3]\e[0m '"Configure Git? [y/N] " yn
+	read -p $'\033[32m[1]\e[0m '"Configure Git? [y/N] " yn
 	case $yn in
 		[Yy]* )
 			read -p $'\033[32m[*]\e[0m '"Personal Email? " email
-			git config --global user.email $email
+			git config --global user.email "$email"
 			read -p $'\033[32m[*]\e[0m '"Full Name? " name
-			git config --global user.name $name
+			git config --global user.name "$name"
 			break
 			;;
 		[Nn]* )
@@ -22,7 +22,7 @@ done
 
 # GitHub SSH config
 while true; do
-	read -p $'\033[32m[3]\e[0m '"Configure work/email GitHub ssh keys? [y/N] " yn
+	read -p $'\033[32m[2]\e[0m '"Configure work/email GitHub ssh keys? [y/N] " yn
 	case $yn in
 		[Yy]* )
 			read -p $'\033[32m[*]\e[0m '"Work Email? " email_work

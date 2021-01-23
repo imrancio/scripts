@@ -23,7 +23,7 @@ while true; do
 done
 
 while true; do
-	read -p $'\033[32m[1]\e[0m '"Setup asdf direnv plugin? [y/N] " yn
+	read -p $'\033[32m[2]\e[0m '"Setup asdf direnv plugin? [y/N] " yn
 	case $yn in
 		[Yy]* )
 			asdf plugin-add direnv
@@ -67,7 +67,7 @@ while true; do
 done
 
 while true; do
-	read -p $'\033[32m[1]\e[0m '"Setup asdf node plugin? [y/N] " yn
+	read -p $'\033[32m[3]\e[0m '"Setup asdf node plugin? [y/N] " yn
 	case $yn in
 		[Yy]* )
 			asdf plugin-add nodejs
@@ -87,7 +87,7 @@ while true; do
 done
 
 while true; do
-	read -p $'\033[32m[1]\e[0m '"Setup asdf python plugin? [y/N] " yn
+	read -p $'\033[32m[4]\e[0m '"Setup asdf python plugin? [y/N] " yn
 	case $yn in
 		[Yy]* )
 			asdf plugin-add python
