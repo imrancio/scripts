@@ -8,7 +8,7 @@ while true; do
 			sudo sed -i.bak 's/^#Color/Color/' /etc/pacman.conf
 			sudo sed -i 's/^#TotalDownload/TotalDownload/' /etc/pacman.conf
 
-			sudo pacman -Sy --needed \
+			sudo pacman -Sy --needed --noconfirm \
 			adapta-maia-theme \
 			adapta-manjaro-themes \
 			bind-tools \
@@ -52,8 +52,8 @@ while true; do
 	read -p $'\033[32m[2]\e[0m '"Install core packages from AUR? " yn
 	case $yn in
 	    [Yy]* )
-            sudo pacman -Sy --needed yay
-			yay -S --needed \
+            sudo pacman -Sy --needed --noconfirm yay
+			yay -S --needed --noconfirm \
 			albert \
             asdf-vm \
 			atom-editor-bin \
@@ -85,8 +85,8 @@ while true; do
 	read -p $'\033[32m[3]\e[0m '"Install core packages from Snap? [y/N] " yn
 	case $yn in
 	    [Yy]* )
-            sudo pacman -Sy --needed yay
-			yay -S --needed snapd
+            sudo pacman -Sy --needed --noconfirm yay
+			yay -S --needed --noconfirm snapd
 			sudo snap install miro --edge
 			break
 			;;

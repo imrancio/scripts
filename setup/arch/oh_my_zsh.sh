@@ -8,7 +8,7 @@ while true; do
 		[Yy]* )
 			read -p $'\033[31m[WARNING]\e[0m '"Must run 'exit' after switching to oh-my-zsh shell [ok] "
 			# zsh
-			sudo pacman -Sy --needed zsh
+			sudo pacman -Sy --needed --noconfirm zsh
 			# oh-my-zsh
 			sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 			# copy custom zsh files
@@ -49,7 +49,7 @@ while true; do
 			# Terminator config with nerdfonts
 			if [[ -d "~/.config/terminator" ]]; then
 				# Check font
-				sudo pacman -Sy --needed yay && yay -S --needed nerd-fonts-terminus
+				sudo pacman -Sy --needed yay --noconfirm && yay -S --needed --noconfirm nerd-fonts-terminus
 				# Terminator themes plugin
 				mkdir -p ~/.config/terminator/plugins
 				wget https://git.io/v5Zww -O "~/.config/terminator/plugins/terminator-themes.py"

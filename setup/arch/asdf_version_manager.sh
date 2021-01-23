@@ -9,8 +9,8 @@ while true; do
 	case $yn in
 		[Yy]* )
 			# Install asdf
-			sudo pacman -Sy --needed yay
-			yay -S --needed asdf-vm
+			sudo pacman -Sy --needed --noconfirm yay
+			yay -S --needed --noconfirm asdf-vm
 			break
 			;;
 		[Nn]* )

@@ -48,8 +48,6 @@ while true; do
 			END
 			# Terminator config with nerdfonts
 			if [[ -d "~/.config/terminator" ]]; then
-				# Check font
-				sudo pacman -Sy --needed yay && yay -S --needed nerd-fonts-terminus
 				# Terminator themes plugin
 				mkdir -p ~/.config/terminator/plugins
 				wget https://git.io/v5Zww -O "~/.config/terminator/plugins/terminator-themes.py"
