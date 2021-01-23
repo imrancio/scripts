@@ -25,6 +25,7 @@ while true; do
 			grep -qF "DEFAULT_USER" ~/.zshrc || echo "DEFAULT_USER=$USER" >> ~/.zshrc
 			# install custom plugins
 			git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+			git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
 			git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 			# add to plugins() in .zshrc
 			grep -qF "zsh-autosuggestions" ~/.zshrc ||
