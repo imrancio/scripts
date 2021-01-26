@@ -4,7 +4,7 @@
 
 # Packages for Atom editor
 while true; do
-	read -p $'\033[32m[1]\e[0m '"Install packages for Atom editor? [y/N] " yn
+	read -p $'\033[32m[1]\033[1m '"Install packages for Atom editor? [y/N] "$'\e[0m' yn
 	case $yn in
 		[Yy]* )
 			type apm > /dev/null 2>&1 || echo -e "\033[0;31mAtom editor not installed!"

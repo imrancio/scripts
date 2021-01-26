@@ -2,12 +2,12 @@
 
 # Git config
 while true; do
-	read -p $'\033[32m[1]\e[0m '"Configure Git? [y/N] " yn
+	read -p $'\033[32m[1]\033[1m '"Configure Git? [y/N] "$'\e[0m' yn
 	case $yn in
 		[Yy]* )
-			read -p $'\033[32m[*]\e[0m '"Personal Email? " email
+			read -p $'\033[32m[a]\e[0m\033[1m '"Personal Email? "$'\e[0m' email
 			git config --global user.email "$email"
-			read -p $'\033[32m[*]\e[0m '"Full Name? " name
+			read -p $'\033[32m[a]\e[0m\033[1m '"Full Name? "$'\e[0m' name
 			git config --global user.name "$name"
 			break
 			;;
@@ -22,13 +22,13 @@ done
 
 # GitHub SSH config
 while true; do
-	read -p $'\033[32m[2]\e[0m '"Configure personal/work GitHub ssh keys? [y/N] " yn
+	read -p $'\033[32m[2]\033[1m '"Configure personal/work GitHub ssh keys? [y/N] "$'\e[0m' yn
 	case $yn in
 		[Yy]* )
-			read -p $'\033[32m[2.1]\e[0m '"Add personal GitHub? [y/N] " yn_personal
+			read -p $'\033[32m[a]\e[0m\033[1m '"Add personal GitHub? [y/N] "$'\e[0m' yn_personal
 			case $yn_personal in
 				[Yy]* )
-					read -p $'\033[32m[*]\e[0m '"Personal Email? " email
+					read -p $'\033[32m[*]\e[0m\033[1m '"Personal Email? "$'\e[0m' email
 					# generate personal github account keypair (if not exist)
 					[[ -f ~/.ssh/id_rsa ]] || ssh-keygen -t rsa -b 4096 -C "$email"
 					cat >> ~/.ssh/config <<-END
@@ -57,10 +57,10 @@ while true; do
 					break
 					;;
 			esac
-			read -p $'\033[32m[2.1]\e[0m '"Add work GitHub? [y/N] " yn_work
+			read -p $'\033[32m[b]\e[0m\033[1m '"Add work GitHub? [y/N] "$'\e[0m' yn_work
 			case $yn_work in
 				[Yy]* )
-					read -p $'\033[32m[*]\e[0m '"Work Email? " email_work
+					read -p $'\033[32m[*]\e[0m\033[1m '"Work Email? "$'\e[0m' email_work
 					# generate work github account keypair (if not exist)
 					[[ -f ~/.ssh/work_rsa ]] || ssh-keygen -t rsa -b 4096 -C "$email_work" -f ~/.ssh/work_rsa
 					cat >> ~/.ssh/config <<-END

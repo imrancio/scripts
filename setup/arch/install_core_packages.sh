@@ -1,7 +1,7 @@
 #!/bin/bash
 
 while true; do
-	read -p $'\033[32m[1]\e[0m '"Install core packages from pacman? [y/N] " yn
+	read -p $'\033[32m[1]\033[1m '"Install core packages from pacman? [y/N] "$'\e[0m' yn
 	case $yn in
 	    [Yy]* )
 			# pacman config
@@ -49,7 +49,7 @@ while true; do
 done
 
 while true; do
-	read -p $'\033[32m[2]\e[0m '"Install core packages from AUR? " yn
+	read -p $'\033[32m[2]\033[1m '"Install core packages from AUR? "$'\e[0m' yn
 	case $yn in
 	    [Yy]* )
             sudo pacman -Sy --needed --noconfirm yay
@@ -82,7 +82,7 @@ while true; do
 done
 
 while true; do
-	read -p $'\033[32m[3]\e[0m '"Install core packages from Snap? [y/N] " yn
+	read -p $'\033[32m[3]\033[1m '"Install core packages from Snap? [y/N] "$'\e[0m' yn
 	case $yn in
 	    [Yy]* )
             sudo pacman -Sy --needed --noconfirm yay

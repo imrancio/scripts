@@ -3,7 +3,7 @@ BASEDIR=$(dirname $0)
 
 # Set up oh-my-zsh with Powerlevel9k theme
 while true; do
-	read -p $'\033[32m[1]\e[0m '"Set up oh-my-zsh with Powerlevel9k theme and custom plugins? [y/N] " yn
+	read -p $'\033[32m[1]\033[1m '"Set up oh-my-zsh with Powerlevel9k theme and custom plugins? [y/N] "$'\e[0m' yn
 	case $yn in
 		[Yy]* )
 			read -p $'\033[33m[WARNING]\e[0m '"Must run 'exit' after switching to oh-my-zsh shell [ok] "
