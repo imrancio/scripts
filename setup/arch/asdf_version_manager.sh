@@ -40,11 +40,13 @@ while true; do
 
 				# Uncomment the following line to make direnv silent by default.
 				# export DIRENV_LOG_FORMAT=""
+
 			END
 			# save shortcut method
 			cat >> "${BASEDIR}/../zsh/functions.zsh" <<-END
 			# A shortcut for asdf managed direnv.
 			direnv(){	asdf exec direnv "$@";	}
+
 			END
 			echo $(
 				cat <<-END

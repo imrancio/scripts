@@ -46,6 +46,7 @@ while true; do
 				  zsh-completions
 				  zsh-syntax-highlighting
 				)
+
 			END
 			# Terminator config with nerdfonts
 			if [[ -d "~/.config/terminator" ]]; then

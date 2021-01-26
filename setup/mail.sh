@@ -44,9 +44,9 @@ if test ! -t 0; then
 	done
 else
 	# app password must be passed through stdin
-	echo $(
+	echo -e $(
 		cat <<- END
-			Generate an App Password for your email first:
+			Generate an App Password for your email first:\n
 			https://support.google.com/accounts/answer/185833
 		END
 	)

@@ -39,6 +39,7 @@ while true; do
 						 AddKeysToAgent yes
 						 UseKeychain yes
 						 IdentityFile ~/.ssh/id_rsa
+
 					END
 					echo $(
 						cat <<-END
@@ -71,6 +72,7 @@ while true; do
 						 AddKeysToAgent yes
 						 UseKeychain yes
 						 IdentityFile ~/.ssh/work_rsa
+
 					END
 					echo $(
 						cat <<-END
