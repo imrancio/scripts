@@ -136,7 +136,7 @@ function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
 
 # Open WinUtil
 function winutil {
-	iwr -useb https://christitus.com/win | iex
+	Invoke-WebRequest -useb https://christitus.com/win | Invoke-Expression
 }
 
 # System Utilities
@@ -160,7 +160,7 @@ function uptime {
     }
 }
 
-function reload-profile {
+function Set-Profile {
     & $profile
 }
 
@@ -362,17 +362,17 @@ Update-PowerShell - Checks for the latest PowerShell release and updates if a ne
 
 Edit-Profile - Opens the current user's profile for editing using the configured editor.
 
+Set-Profile - Reloads the current user's PowerShell profile.
+
+Get-PubIP - Retrieves the public IP address of the machine.
+
 touch <file> - Creates a new empty file.
 
 ff <name> - Finds files recursively with the specified name.
 
-Get-PubIP - Retrieves the public IP address of the machine.
-
 winutil - Runs the WinUtil script from Chris Titus Tech.
 
 uptime - Displays the system uptime.
-
-reload-profile - Reloads the current user's PowerShell profile.
 
 unzip <file> - Extracts a zip file to the current directory.
 
