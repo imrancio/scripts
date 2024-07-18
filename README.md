@@ -1,33 +1,22 @@
-# Scripts
-This repo will hold any useful shell scripts to automate various setup and configuration processes.
+# 🍉 Scripts
+This public repo will hold any useful shell scripts to automate various setup and configuration processes.
 
-## How to
+## ❓ How to
+
+#### Linux 
+
 ```sh
-git clone https://github.com/imrancio/scripts.git
-cd scripts
-bash setup/<script name>
+# replace <script path> with local path to linux shell script
+curl -s "https://github.com/imrancio/scripts/raw/main/<script path>" | bash
 ```
 
-### setup/manjaro_xfce.sh
-Interactive shell script to set up and configure fresh Manjaro XFCE install. Broken down into optional stages:
-* Installs core packages from Manjaro repo
-* Installs additional packages from AUR (must be enabled in pamac)
-* Configures Git email & name
-* Sets up BlackArch repo/menus and installs some pentesting tools
-* Fixes incorrect datetime issue arising from Linux/Windows dual-boot
-* Sets up `oh-my-zsh` with `powerlevel9k` theme and custom plugins `zsh-autocomplete` & `zsh-autosuggestions`
+#### Windows
 
-All this can be configured of course depending on the use case, but should apply to anyone wanting a similar setup.
+```pwsh
+# replace <script path> with local path to windows shell script
+irm "https://github.com/imrancio/scripts/raw/main/<script path>" | iex
+```
 
-### setup/arch_pentest.sh
-Installs some pentesting tools from Arch repo and AUR. Packages include:
-* aircrack-ng
-* burpsuite
-* create_ap
-* hashcat
-* hydra
-* john
-* nmap
-* rkhunter
-* samdump2
-* sqlmap
+## 📘 Additional Docs
+
+- [pwsh](setup/pwsh/README.md)
