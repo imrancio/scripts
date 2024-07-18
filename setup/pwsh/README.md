@@ -6,7 +6,7 @@ A stylish and functional PowerShell profile that looks and feels almost as good 
 
 Execute the following command in an elevated PowerShell window to install the PowerShell profile:
 
-```
+```pwsh
 irm "https://github.com/imrancio/scripts/raw/main/setup/pwsh/init.ps1" | iex
 ```
 
