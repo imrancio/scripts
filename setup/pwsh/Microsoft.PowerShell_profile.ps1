@@ -21,8 +21,14 @@ if ([bool]([System.Security.Principal.WindowsIdentity]::GetCurrent()).IsSystem) 
     [System.Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', 'true', [System.EnvironmentVariableTarget]::Machine)
 }
 
-# Initial GitHub.com connectivity check with 1 second timeout
-$canConnectToGitHub = Test-Connection github.com -Count 1 -Quiet -TimeoutSeconds 1
+# Check profile.ps1 exists for current user
+$userProfileExists = Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf
+# Check UpdatePowerShell=Off in user profile
+$notUpdatePowerShell = ($true -eq $global:userProfileExists) -and (Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "UpdatePowerShell=Off" -CaseSensitive)
+# Check UpdateProfile=Off in user profile
+$notUpdateProfile = ($true -eq $global:userProfileExists) -and (Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "UpdateProfile=Off" -CaseSensitive)
+# Initial GitHub.com connectivity check with 1 second timeout (if any updates needed from GitHub)
+$canConnectToGitHub = -not ($true -eq $global:notUpdateProfile -and $true -eq $global:notUpdatePowerShell) -and (Test-Connection github.com -Count 1 -Quiet -TimeoutSeconds 1)
 
 # Import Modules and External Profiles
 # Ensure posh-git module is installed before importing
@@ -42,8 +48,7 @@ if (Test-Path($ChocolateyProfile)) {
 
 # Check for Profile Updates
 function Update-Profile {
-    $notUpdateProfile = (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) -and (Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "UpdateProfile=Off" -CaseSensitive)
-    if ($true -eq $notUpdateProfile) {
+    if ($true -eq $global:notUpdateProfile) {
         Write-Host "Skipping profile update check due to UpdateProfile=Off in current profile" -ForegroundColor Yellow
         return
     }
@@ -70,8 +75,7 @@ function Update-Profile {
 Update-Profile
 
 function Update-PowerShell {
-    $notUpdatePowerShell = (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) -and (Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "UpdatePowerShell=Off" -CaseSensitive)
-    if ($true -eq $notUpdatePowerShell) {
+    if ($true -eq $global:notUpdatePowerShell) {
         Write-Host "Skipping PowerShell update check due to UpdatePowerShell=Off in current profile" -ForegroundColor Yellow
         return
     }
@@ -332,7 +336,7 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock $scriptblock
 
 # Get theme from profile.ps1 or use a default theme
 function Get-Theme {
-    if (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) {
+    if ($true -eq $global:userProfileExists) {
         $existingTheme = Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "oh-my-posh init pwsh --config"
         if ($null -ne $existingTheme) {
             Invoke-Expression $existingTheme
