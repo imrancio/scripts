@@ -42,6 +42,11 @@ if (Test-Path($ChocolateyProfile)) {
 
 # Check for Profile Updates
 function Update-Profile {
+    $notUpdateProfile = (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) -and (Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "UpdateProfile=Off" -CaseSensitive)
+    if ($true -eq $notUpdateProfile) {
+        Write-Host "Skipping profile update check due to UpdateProfile=Off in current profile" -ForegroundColor Yellow
+        return
+    }
     if (-not $global:canConnectToGitHub) {
         Write-Host "Skipping profile update check due to GitHub.com not responding within 1 second." -ForegroundColor Yellow
         return
@@ -65,6 +70,12 @@ function Update-Profile {
 Update-Profile
 
 function Update-PowerShell {
+    $notUpdatePowerShell = (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) -and (Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "UpdatePowerShell=Off" -CaseSensitive)
+    if ($true -eq $notUpdatePowerShell) {
+        Write-Host "Skipping PowerShell update check due to UpdatePowerShell=Off in current profile" -ForegroundColor Yellow
+        return
+    }
+
     if (-not $global:canConnectToGitHub) {
         Write-Host "Skipping PowerShell update check due to GitHub.com not responding within 1 second." -ForegroundColor Yellow
         return
