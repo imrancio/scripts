@@ -313,9 +313,18 @@ function cpy { Set-Clipboard $args[0] }
 
 function pst { Get-Clipboard }
 
-# UNIX-like 'watch' command
-function watch { param([string]$command, [int]$interval=2)
-    while ($true) { Clear-Host; Invoke-Expression $command; Start-Sleep -Seconds $interval }
+# pipe-safe UNIX-like 'watch' command, i.e. watch { PSExpression | ... } TimeIntervalSeconds
+function watch {
+    param (
+        [ScriptBlock]$ScriptBlock,
+        [int]$Interval = 2
+    )
+
+    while ($true) {
+        Clear-Host
+        & $ScriptBlock
+        Start-Sleep -Seconds $Interval
+    }
 }
 
 # Enhanced PowerShell Experience
