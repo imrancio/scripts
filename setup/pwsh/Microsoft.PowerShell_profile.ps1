@@ -313,6 +313,11 @@ function cpy { Set-Clipboard $args[0] }
 
 function pst { Get-Clipboard }
 
+# UNIX-like 'watch' command
+function watch { param([string]$command, [int]$interval=2)
+    while ($true) { Clear-Host; Invoke-Expression $command; Start-Sleep -Seconds $interval }
+}
+
 # Enhanced PowerShell Experience
 $PSROptions = @{
     ContinuationPrompt = '  '
@@ -450,6 +455,8 @@ flushdns - Clears the DNS cache.
 cpy <text> - Copies the specified text to the clipboard.
 
 pst - Retrieves text from the clipboard.
+
+watch - Continuously watch command execution at specified intervals.
 
 Use 'Show-Help' to display this help message.
 "@
