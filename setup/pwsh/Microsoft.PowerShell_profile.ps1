@@ -322,6 +322,8 @@ function watch {
 
     while ($true) {
         Clear-Host
+        $now = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+        Write-Host "Running at $now — every $Interval seconds`n" -ForegroundColor Cyan
         & $ScriptBlock
         Start-Sleep -Seconds $Interval
     }
