@@ -15,7 +15,7 @@ done) &
 
 # ── Packages ─────────────────────────────────────────────────────────────────
 echo "📦 Installing packages via paru..."
-yes | paru -S --needed \
+paru -S --needed --noconfirm --sudoloop \
 	bat \
 	claude-code \
 	claude-desktop-bin \
@@ -220,6 +220,28 @@ git config --global merge.conflictstyle diff3
 echo "  → git: git-delta set for git diff and log enhancements"
 echo ""
 
+# ── SSH key ───────────────────────────────────────────────────────────────────
+echo "🔑 Setting up SSH key pair..."
+
+if [[ -f ~/.ssh/id_ed25519 ]]; then
+	echo "  → ~/.ssh/id_ed25519 already exists, skipping"
+else
+	mkdir -p ~/.ssh
+	chmod 700 ~/.ssh
+	ssh-keygen -t ed25519 -C "imran@imranc.io" -f ~/.ssh/id_ed25519 -N ""
+	echo "  → ed25519 keypair generated"
+fi
+
+if [[ -z "${SSH_AUTH_SOCK:-}" ]]; then
+	eval "$(ssh-agent -s)" >/dev/null
+fi
+ssh-add ~/.ssh/id_ed25519 2>/dev/null && echo "  → key loaded into ssh-agent" || echo "  → run manually: ssh-add ~/.ssh/id_ed25519"
+echo ""
+echo "  📋 Add this public key to GitHub → https://github.com/settings/ssh/new"
+echo ""
+cat ~/.ssh/id_ed25519.pub
+echo ""
+
 # ── Summary ───────────────────────────────────────────────────────────────────
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "✨ Setup complete!"
@@ -288,6 +310,10 @@ echo "     jorgebucaran/autopair.fish  — Auto-close brackets/quotes"
 echo "     meaningful-ooo/sponge       — Auto-clean failed cmds from history"
 echo "     franciscolourenco/done      — Desktop notifications for long cmds"
 echo "     acomagu/fish-async-prompt   — Async prompt for snappiness"
+echo ""
+echo "🔑 SSH key:"
+echo "   ~/.ssh/id_ed25519      — ed25519 keypair (no passphrase)"
+echo "   ~/.ssh/id_ed25519.pub  — add to https://github.com/settings/ssh/new"
 echo ""
 echo "🔀 Git (global):"
 echo "   core.editor              — code --wait"
