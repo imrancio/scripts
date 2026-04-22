@@ -129,6 +129,18 @@ else
 	starship preset gruvbox-rainbow -o ~/.config/starship.toml
 	echo "  → starship: gruvbox-rainbow preset written to ~/.config/starship.toml"
 fi
+
+# CachyOS glyph — starship ships a ribbon emoji (🎗️) as the default for
+# CachyOS since no Nerd Font has a dedicated glyph. Reuse Arch's (󰣇).
+# Inserted after the Arch line in [os.symbols] so it lives with its siblings.
+if grep -qE '^CachyOS\s*=' ~/.config/starship.toml; then
+	echo "  → starship: CachyOS glyph already set, skipping"
+elif grep -qE '^Arch\s*=' ~/.config/starship.toml; then
+	sed -i '/^Arch = /a CachyOS = "󰣇"' ~/.config/starship.toml
+	echo "  → starship: CachyOS glyph added (reuses Arch: 󰣇)"
+else
+	echo "  → starship: no [os.symbols] Arch entry found — skipping CachyOS patch"
+fi
 echo ""
 
 # All fisher plugins — must be invoked inside fish since fisher is a fish function
@@ -349,7 +361,7 @@ echo ""
 echo "🔧 Shell configuration:"
 echo "   ~/.bashrc                       — nvm + zoxide init sourced (bash fallback)"
 echo "   ~/.config/fish/config.fish      — NVM auto-detect + zoxide + starship + EDITOR=micro + XDG_CURRENT_DESKTOP=COSMIC + abbrs"
-echo "   ~/.config/starship.toml         — gruvbox-rainbow preset"
+echo "   ~/.config/starship.toml         — gruvbox-rainbow preset + CachyOS glyph override (󰣇)"
 echo "   ~/.config/alacritty/alacritty.toml — FiraCode Nerd Font, size 13"
 echo "   fish plugins:"
 echo "     jorgebucaran/nvm.fish       — Node version manager"
