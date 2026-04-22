@@ -19,6 +19,7 @@ paru -S --needed --noconfirm --sudoloop \
 	bat \
 	claude-code \
 	claude-desktop-bin \
+	cliphist \
 	code \
 	docker \
 	duf \
@@ -26,6 +27,7 @@ paru -S --needed --noconfirm --sudoloop \
 	eza \
 	fd \
 	fisher \
+	fuzzel \
 	fzf \
 	git-crypt \
 	git-delta \
@@ -43,6 +45,7 @@ paru -S --needed --noconfirm --sudoloop \
 	ttf-cascadia-code-nerd \
 	ttf-firacode-nerd \
 	vlc \
+	wl-clipboard \
 	yq \
 	zellij \
 	zoxide
@@ -190,6 +193,48 @@ EOF
 fi
 echo ""
 
+# ── Clipboard stack (cliphist + wl-clipboard + fuzzel) ──────────────────────
+# Super+V picker: fuzzel dmenu → cliphist decode → wl-copy.
+# Watcher runs at login via XDG autostart; keybind is set manually (COSMIC
+# shortcut config is RON and not safe to edit programmatically).
+echo "📋 Configuring clipboard watcher autostart..."
+
+CLIPHIST_AUTOSTART="$HOME/.config/autostart/cliphist.desktop"
+if [[ -f "$CLIPHIST_AUTOSTART" ]]; then
+	echo "  → $CLIPHIST_AUTOSTART already exists, skipping"
+else
+	mkdir -p "$(dirname "$CLIPHIST_AUTOSTART")"
+	cat >"$CLIPHIST_AUTOSTART" <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=cliphist
+Exec=sh -c 'wl-paste --watch cliphist store'
+X-GNOME-Autostart-enabled=true
+NoDisplay=true
+EOF
+	echo "  → $CLIPHIST_AUTOSTART written"
+fi
+
+# fuzzel theme — Catppuccin-ish palette to match COSMIC's default dark theme
+FUZZEL_CONFIG="$HOME/.config/fuzzel/fuzzel.ini"
+if [[ -f "$FUZZEL_CONFIG" ]]; then
+	echo "  → $FUZZEL_CONFIG already exists, skipping"
+else
+	mkdir -p "$(dirname "$FUZZEL_CONFIG")"
+	cat >"$FUZZEL_CONFIG" <<'EOF'
+[colors]
+background=1e1e2eff
+text=cdd6f4ff
+match=89b4faff
+selection=313244ff
+selection-text=cdd6f4ff
+selection-match=89b4faff
+border=89b4faff
+EOF
+	echo "  → $FUZZEL_CONFIG written (dark theme)"
+fi
+echo ""
+
 # ── Docker ────────────────────────────────────────────────────────────────────
 echo "🐳 Configuring Docker..."
 
@@ -251,6 +296,7 @@ echo "📦 Packages installed:"
 echo "   bat                — Better cat with syntax highlighting"
 echo "   claude-code        — Claude AI CLI"
 echo "   claude-desktop-bin — Claude Desktop app"
+echo "   cliphist           — Wayland clipboard history store"
 echo "   code               — VS Code (OSS)"
 echo "   docker             — Container engine"
 echo "   duf                — Better df (disk usage overview)"
@@ -258,6 +304,7 @@ echo "   dust               — Better du (disk usage tree)"
 echo "   eza                — Better ls (icons, git status)"
 echo "   fd                 — Better find"
 echo "   fisher             — Fish plugin manager"
+echo "   fuzzel             — Wayland dmenu-style launcher (clipboard picker UI)"
 echo "   fzf                — Fuzzy finder (used by fzf.fish plugin)"
 echo "   git-crypt          — Git repo encryption"
 echo "   git-delta          — Enhanced diff/log viewer"
@@ -275,6 +322,7 @@ echo "   starship           — Cross-shell prompt"
 echo "   ttf-cascadia-code-nerd — Cascadia Code Nerd Font"
 echo "   ttf-firacode-nerd  — FiraCode Nerd Font (used by Alacritty)"
 echo "   vlc                — Media player"
+echo "   wl-clipboard       — Wayland clipboard CLI (wl-copy / wl-paste)"
 echo "   yq                 — YAML/JSON/TOML processor (like jq for YAML)"
 echo "   zellij             — Terminal multiplexer (tmux alternative)"
 echo "   zoxide             — Smarter cd that learns your habits (z)"
@@ -325,6 +373,21 @@ echo ""
 echo "🐳 Docker:"
 echo "   docker.service  — enabled at boot"
 echo "   $USER           — added to 'docker' group"
+echo ""
+echo "📋 Clipboard (Super+V picker):"
+echo "   Packages:  cliphist · wl-clipboard · fuzzel"
+echo "   Autostart: ~/.config/autostart/cliphist.desktop"
+echo "              (runs: wl-paste --watch cliphist store)"
+echo "   Theme:     ~/.config/fuzzel/fuzzel.ini  (dark, matches COSMIC default)"
+echo ""
+echo "   ⚠️  Manual step — COSMIC shortcut config is not safely editable by script."
+echo "   Bind Super+V: Settings → Input → Keyboard → Keyboard Shortcuts →"
+echo "                 Custom Shortcuts → Add Shortcut"
+echo "   Command:"
+echo "     sh -c 'cliphist list | fuzzel --dmenu | cliphist decode | wl-copy'"
+echo ""
+echo "   Test from a terminal before binding. History only fills once the"
+echo "   autostart watcher is running — log out and back in first."
 echo ""
 echo "💡 zellij SSH workflow:"
 echo "   ssh user@host -t 'zellij attach --create main'"
