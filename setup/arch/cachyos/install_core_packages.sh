@@ -89,11 +89,11 @@ set -gx VISUAL micro
 # Zoxide (smarter cd)
 zoxide init fish | source
 
-# NVM auto-detection
+# NVM auto-detection (nvm.fish's `nvm install` already activates —
+# calling `nvm use` after it produces a duplicate "Now using..." line)
 function __auto_nvm --on-variable PWD
     if test -f .nvmrc
         nvm install
-        nvm use
     end
 end
 
