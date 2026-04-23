@@ -275,6 +275,8 @@ git config --global delta.line-numbers true
 git config --global delta.side-by-side true
 git config --global merge.conflictstyle diff3
 echo "  → git: git-delta set for git diff and log enhancements"
+git config --global url."git@github.com:".insteadOf "https://github.com/"
+echo "  → git: always use ssh instead of https"
 echo ""
 
 # ── SSH key ───────────────────────────────────────────────────────────────────
@@ -297,6 +299,9 @@ echo ""
 echo "  📋 Add this public key to GitHub → https://github.com/settings/ssh/new"
 echo ""
 cat ~/.ssh/id_ed25519.pub
+echo "  💡 You can generate a Personal Access Token here https://github.com/settings/tokens"
+echo "     The minimum required scopes are 'repo', 'read:org', 'admin:public_key'"
+echo "     Run 'gh auth login' → GitHub.com → SSH → ~/.ssh/id_ed25519.pub"
 echo ""
 
 # ── Summary ───────────────────────────────────────────────────────────────────
