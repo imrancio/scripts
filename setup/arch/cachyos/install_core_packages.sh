@@ -291,6 +291,19 @@ else
 	echo "  → ed25519 keypair generated"
 fi
 
+if [[ -f ~/.ssh/config ]] && grep -q "^Host github.com$" ~/.ssh/config; then
+	echo "  → ~/.ssh/config already has github.com entry, skipping"
+else
+	cat >>~/.ssh/config <<'EOF'
+
+Host github.com
+    IdentityFile ~/.ssh/id_ed25519
+    AddKeysToAgent yes
+EOF
+	chmod 600 ~/.ssh/config
+	echo "  → added github.com block to ~/.ssh/config"
+fi
+
 if [[ -z "${SSH_AUTH_SOCK:-}" ]]; then
 	eval "$(ssh-agent -s)" >/dev/null
 fi
