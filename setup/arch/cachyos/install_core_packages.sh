@@ -21,6 +21,7 @@ paru -S --needed --noconfirm --sudoloop \
 	claude-desktop-bin \
 	cliphist \
 	code \
+	cosmic-ext-quake-terminal \
 	docker \
 	duf \
 	dust \
@@ -246,10 +247,25 @@ EOF
 fi
 echo ""
 
+# ── Quake terminal (cosmic-ext-quake-terminal → alacritty) ──────────────────
+# TODO: wait for official cosmic-ext-quake-terminal support
+echo "🖱️  Configuring cosmic-ext-quake-terminal..."
+
+QUAKE_TERM_CONFIG="$HOME/.config/cosmic/com.github.m0rf30.CosmicExtQuakeTerminal/v1/term"
+if [[ -f "$QUAKE_TERM_CONFIG" ]] && [[ "$(cat "$QUAKE_TERM_CONFIG")" == '"alacritty"' ]]; then
+	echo "  → cosmic-ext-quake-terminal already set to alacritty, skipping"
+else
+	mkdir -p "$(dirname "$QUAKE_TERM_CONFIG")"
+	echo '"alacritty"' >"$QUAKE_TERM_CONFIG"
+	echo "  → cosmic-ext-quake-terminal: terminal set to alacritty"
+fi
+echo ""
+
 # ── Clipboard stack (cliphist + wl-clipboard + fuzzel) ──────────────────────
 # Super+V picker: fuzzel dmenu → cliphist decode → wl-copy.
 # Watcher runs at login via XDG autostart; keybind is set manually (COSMIC
 # shortcut config is RON and not safe to edit programmatically).
+# TODO: remove clipboard stack after COSMIC native feature added
 echo "📋 Configuring clipboard watcher autostart..."
 
 CLIPHIST_AUTOSTART="$HOME/.config/autostart/cliphist.desktop"
@@ -316,8 +332,6 @@ git config --global delta.line-numbers true
 git config --global delta.side-by-side true
 git config --global merge.conflictstyle diff3
 echo "  → git: git-delta set for git diff and log enhancements"
-git config --global url."git@github.com:".insteadOf "https://github.com/"
-echo "  → git: always use ssh instead of https"
 echo ""
 
 # ── SSH key ───────────────────────────────────────────────────────────────────
@@ -369,6 +383,7 @@ echo "   claude-code        — Claude AI CLI"
 echo "   claude-desktop-bin — Claude Desktop app"
 echo "   cliphist           — Wayland clipboard history store"
 echo "   code               — VS Code (OSS)"
+echo "   cosmic-ext-quake-terminal — Quake-style dropdown terminal (Super+\`)"
 echo "   docker             — Container engine"
 echo "   duf                — Better df (disk usage overview)"
 echo "   dust               — Better du (disk usage tree)"
@@ -449,20 +464,30 @@ echo "🐳 Docker:"
 echo "   docker.service  — enabled at boot"
 echo "   $USER           — added to 'docker' group"
 echo ""
-echo "📋 Clipboard (Super+V picker):"
+echo "📋 Clipboard (Super+V picker - temporary until native support added by System76):"
 echo "   Packages:  cliphist · wl-clipboard · fuzzel"
 echo "   Autostart: ~/.config/autostart/cliphist.desktop"
 echo "              (runs: wl-paste --watch cliphist store)"
 echo "   Theme:     ~/.config/fuzzel/fuzzel.ini  (dark, matches COSMIC default)"
 echo ""
-echo "   ⚠️  Manual step — COSMIC shortcut config is not safely editable by script."
-echo "   Bind Super+V: Settings → Input → Keyboard → Keyboard Shortcuts →"
-echo "                 Custom Shortcuts → Add Shortcut"
-echo "   Command:"
-echo "     sh -c 'cliphist list | fuzzel --dmenu | cliphist decode | wl-copy'"
+echo "🖱️  Quake terminal (Super+\` toggle - broken for now until Sytem76 updates pkg):"
+echo "   Package:   cosmic-ext-quake-terminal"
+echo "   Config:    ~/.config/cosmic/com.github.m0rf30.CosmicExtQuakeTerminal/v1/term"
+echo "              (terminal: alacritty)"
 echo ""
-echo "   Test from a terminal before binding. History only fills once the"
-echo "   autostart watcher is running — log out and back in first."
+echo "⌨️  Custom COSMIC shortcuts (manual):"
+echo "   ⚠️  COSMIC shortcut config is RON and not safely editable by script."
+echo "   Add via: Settings → Input → Keyboard → Keyboard Shortcuts →"
+echo "            Custom Shortcuts → Add Shortcut"
+echo ""
+echo "   Super+V  → Clipboard picker"
+echo "       sh -c 'cliphist list | fuzzel --dmenu | cliphist decode | wl-copy'"
+echo ""
+echo "   Super+\`  → Quake terminal toggle"
+echo "       cosmic-ext-quake-terminal toggle"
+echo ""
+echo "   Test from a terminal before binding. Clipboard history only fills"
+echo "   once the autostart watcher is running — log out and back in first."
 echo ""
 echo "💡 zellij SSH workflow:"
 echo "   ssh user@host -t 'zellij attach --create main'"
