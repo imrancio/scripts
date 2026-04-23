@@ -34,6 +34,7 @@ paru -S --needed --noconfirm --sudoloop \
 	github-cli \
 	github-desktop \
 	gnome-keyring \
+	jq \
 	lazygit \
 	micro \
 	nvm \
@@ -163,6 +164,8 @@ echo "🧩 Installing VS Code extensions..."
 
 code \
 	--install-extension Anthropic.claude-code \
+	--install-extension bierner.emojisense \
+	--install-extension bierner.markdown-mermaid \
 	--install-extension christian-kohler.path-intellisense \
 	--install-extension dbaeumer.vscode-eslint \
 	--install-extension editorconfig.editorconfig \
@@ -176,11 +179,49 @@ code \
 	--install-extension ms-python.python \
 	--install-extension oderwat.indent-rainbow \
 	--install-extension redhat.vscode-yaml \
+	--install-extension sndst00m.markdown-github-dark-pack \
 	--install-extension tamasfe.even-better-toml \
 	--install-extension usernamehw.errorlens \
 	--install-extension yzhang.markdown-all-in-one
 
-echo "  → 17 extensions installed"
+echo "  → 20 extensions installed"
+echo ""
+
+# ── VS Code settings ─────────────────────────────────────────────────────────
+echo "⚙️  Configuring VS Code (OSS) settings..."
+
+vscode_settings="$HOME/.config/Code - OSS/User/settings.json"
+vscode_new='{
+    "claudeCode.preferredLocation": "sidebar",
+    "terminal.integrated.fontFamily": "FiraCode Nerd Font",
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "bash",
+            "args": ["-l"]
+        },
+        "fish": {
+            "path": "fish"
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "fish"
+}'
+
+mkdir -p "$(dirname "$vscode_settings")"
+if [[ ! -f "$vscode_settings" ]]; then
+	echo "$vscode_new" | jq '.' >"$vscode_settings"
+	echo "  → settings.json created"
+elif jq -e --argjson new "$vscode_new" '. * $new == .' "$vscode_settings" >/dev/null 2>&1; then
+	echo "  → settings.json already has required keys, skipping"
+else
+	tmp=$(mktemp)
+	if jq --argjson new "$vscode_new" '. * $new' "$vscode_settings" >"$tmp" 2>/dev/null; then
+		mv "$tmp" "$vscode_settings"
+		echo "  → settings.json merged"
+	else
+		rm -f "$tmp"
+		echo "  ⚠️  settings.json couldn't be parsed as JSON (JSONC comments?), skipping merge"
+	fi
+fi
 echo ""
 
 # ── Alacritty ────────────────────────────────────────────────────────────────
@@ -341,6 +382,7 @@ echo "   git-delta          — Enhanced diff/log viewer"
 echo "   github-cli         — GitHub CLI (gh)"
 echo "   github-desktop     — GitHub Desktop GUI"
 echo "   gnome-keyring      — Credential/secrets manager"
+echo "   jq                 — JSON processor (used for VS Code settings merge)"
 echo "   lazygit            — Terminal UI for git"
 echo "   micro              — Terminal text editor (default \$EDITOR)"
 echo "   nvm                — Node version manager"
@@ -359,6 +401,8 @@ echo "   zoxide             — Smarter cd that learns your habits (z)"
 echo ""
 echo "🧩 VS Code extensions:"
 echo "   Anthropic.claude-code               — Claude Code IDE integration"
+echo "   bierner.emojisense                  — Emoji autocomplete + picker"
+echo "   bierner.markdown-mermaid            — Mermaid diagrams in markdown preview"
 echo "   christian-kohler.path-intellisense  — Path autocomplete"
 echo "   dbaeumer.vscode-eslint              — ESLint integration"
 echo "   editorconfig.editorconfig           — EditorConfig support"
@@ -372,6 +416,7 @@ echo "   ms-azuretools.vscode-docker         — Docker support"
 echo "   ms-python.python                    — Python language support"
 echo "   oderwat.indent-rainbow              — Indent level highlighting"
 echo "   redhat.vscode-yaml                  — YAML language support"
+echo "   sndst00m.markdown-github-dark-pack  — GitHub dark theme for markdown"
 echo "   tamasfe.even-better-toml            — TOML language support"
 echo "   usernamehw.errorlens                — Inline error/warning display"
 echo "   yzhang.markdown-all-in-one          — Markdown editing suite"
