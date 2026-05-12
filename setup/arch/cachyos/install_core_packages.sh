@@ -32,6 +32,7 @@ paru -S --needed --noconfirm --sudoloop \
 	fzf \
 	git-crypt \
 	git-delta \
+	git-lfs \
 	github-cli \
 	github-desktop \
 	gnome-keyring \
