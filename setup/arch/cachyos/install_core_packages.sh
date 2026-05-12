@@ -22,6 +22,7 @@ paru -S --needed --noconfirm --sudoloop \
 	cliphist \
 	code \
 	cosmic-ext-quake-terminal \
+	cosmic-tweaks \
 	docker \
 	duf \
 	dust \
