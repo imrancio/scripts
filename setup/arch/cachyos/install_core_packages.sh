@@ -195,6 +195,7 @@ echo "⚙️  Configuring VS Code (OSS) settings..."
 vscode_settings="$HOME/.config/Code - OSS/User/settings.json"
 vscode_new='{
     "claudeCode.preferredLocation": "sidebar",
+	"github.gitProtocol": "ssh",
     "terminal.integrated.fontFamily": "FiraCode Nerd Font",
     "terminal.integrated.profiles.linux": {
         "bash": {
